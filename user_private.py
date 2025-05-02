@@ -91,7 +91,6 @@ async def menu_cmd(message: types.Message):
     )
     await message.answer(text.as_html())
 
-# @user_private_router.message(F.text.lower() == "меню")
 @user_private_router.message(or_f(Command("menu"), (F.text.lower() == "меню")))
 async def menu_cmd(message: types.Message):
     button_peperoni = types.InlineKeyboardButton(text="Пицца пеперони", callback_data="In_peperoni_button")
@@ -190,7 +189,6 @@ async def show_cart(message: types.Message):
 
         await message.answer(f"{name}\n{desc}\n\nКоличество: {qty}", reply_markup=keyboard)
 
-    # Добавляем кнопку "Оформить заказ" один раз после всех товаров
     keyboard_checkout = types.InlineKeyboardMarkup(inline_keyboard=[
         [types.InlineKeyboardButton(text="Оформить заказ", callback_data="checkout")]
     ])
@@ -288,7 +286,6 @@ async def finish_order(message: types.Message, state: FSMContext):
 
     order_text = "Ваш заказ:\n"
     for product_key, qty in cart.items():
-        # Можно вынести в отдельную функцию для удобства
         if product_key == "peperoni":
             name = "Пицца пепперони"
         elif product_key == "margarita":
@@ -302,6 +299,6 @@ async def finish_order(message: types.Message, state: FSMContext):
     order_text += f"\nТелефон: {phone}\nАдрес доставки: {address}\n\nСпасибо за заказ! Мы свяжемся с вами для подтверждения."
 
     await message.answer(order_text)
-    user_carts[user_id] = {}  # очистка корзины
+    user_carts[user_id] = {}
     await state.clear()
 
