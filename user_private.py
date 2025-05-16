@@ -37,7 +37,7 @@ async def start_cmd(message: types.Message):
         ),
     )
 
-
+#артемий
 @user_private_router.message(F.text.lower() == "помощь")
 @user_private_router.message(Command("help"))
 async def menu_cmd(message: types.Message):
@@ -91,6 +91,7 @@ async def menu_cmd(message: types.Message):
     )
     await message.answer(text.as_html())
 
+#лия
 # @user_private_router.message(F.text.lower() == "меню")
 @user_private_router.message(or_f(Command("menu"), (F.text.lower() == "меню")))
 async def menu_cmd(message: types.Message):
@@ -138,6 +139,7 @@ async def send_random_value(callback: types.CallbackQuery):
     ])
     await callback.message.answer_photo(photo, caption=caption, reply_markup=keyboard)
 
+#нейронка
 @user_private_router.callback_query(F.data.startswith("add_"))
 async def add_to_cart(callback: types.CallbackQuery):
     user_id = callback.from_user.id
@@ -189,6 +191,7 @@ async def delete_product(callback: types.CallbackQuery):
         await callback.answer("Товар уже удалён.")
     await show_cart_update(callback, user_id)
 
+#артемий
 @user_private_router.message(F.text.lower() == "корзина")
 @user_private_router.message(Command("cart"))
 async def show_cart_update(message: types.Message):
@@ -228,6 +231,7 @@ async def show_cart_update(message: types.Message):
     ])
     await message.answer("Когда будете готовы, нажмите кнопку ниже для оформления заказа:", reply_markup=keyboard_checkout)
 
+#артмемий и лия, немного путались в датах и нейронка всё на места расставила
 class OrderStates(StatesGroup):
     waiting_for_phone = State()
     address_choice = State()
@@ -315,7 +319,7 @@ async def process_address(message: types.Message, state: FSMContext):
         )
     )
 
-
+#лия
 import os
 from aiogram.types import LabeledPrice
 from aiogram import Bot
@@ -343,6 +347,8 @@ async def process_successful_payment(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     await message.answer("Спасибо за оплату! Ваш заказ принят в обработку. Ожидайте доставку 🍕")
     user_carts[user_id] = {}
+    await state.clear()
+
     await state.clear()
 
 
