@@ -1,3 +1,4 @@
+#артемий
 from aiogram.types import BotCommand
 
 
